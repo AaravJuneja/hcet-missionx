@@ -13,14 +13,26 @@ h1 {
     color: #007bff;
 }
 
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 /* Form Styles */
 form {
     width: 300px;
     margin: 50px auto;
     padding: 20px;
-    background: #2e2e2e;
+    background: #1e1e1e;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 9px 9px 16px #121212, -9px -9px 16px #262626;
 }
 
 label, input {
@@ -34,33 +46,24 @@ input {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: #3e3e3e;
-    color: #e0e0e0;
+    background: #f0f0f0;
+    color: #000000;
+    box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #ffffff;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background: #007bff;
+    background: #1e1e1e;
     color: #fff;
     border: none;
     border-radius: 5px;
+    box-shadow: 4px 4px 8px #121212, -4px -4px 8px #262626;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
-    background: #0056b3;
-}
-
-a {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
+    background: #007bff;
+    box-shadow: 4px 4px 8px #0056b3, -4px -4px 8px #009fff;
 }
