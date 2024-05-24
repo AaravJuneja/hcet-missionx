@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('loginForm')) {
-        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -23,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (document.getElementById('registerForm')) {
-        document.getElementById('registerForm').addEventListener('submit', async (event) => {
+    if (registerForm) {
+        registerForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
