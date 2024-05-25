@@ -7,10 +7,31 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <!-- Add mission information and communication tools here -->
-    <!-- Placeholder for logs -->
-    <!-- Placeholder for weather API -->
-    <a href="admin.html">Admin Panel</a>
+    <header>
+        <h1>Dashboard</h1>
+    </header>
+    <main>
+        <!-- Mission Information Section -->
+        <section id="missions">
+            <h2>Active Missions</h2>
+            <!-- Missions will be dynamically loaded here -->
+        </section>
+        
+        <!-- Communication Tools Section -->
+        <section id="communication">
+            <h2>Communication Facility</h2>
+            <div class="chat-window">
+                <div class="chat-messages">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <input type="text" id="chatInput" placeholder="Type a message">
+                <button id="sendMessage">Send</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <a href="admin.html">Admin Panel</a>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

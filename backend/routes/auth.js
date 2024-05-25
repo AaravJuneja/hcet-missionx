@@ -1,27 +1,30 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const connect = require('../models/User');
-
 const router = express.Router();
+const connectUsers = require('../models/User');
 
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    const users = await connect();
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = { username, password: hashedPassword };
-    await users.insertOne(user);
-    res.status(201).json(user);
+    const users = await connectUsers();
+    const existingUser = await users.findOne({ username });
+
+    if (existingUser) {
+        return res.status(400).send({ error: 'Username already exists' });
+    }
+
+    await users.insertOne({ username, password, role: 'Agent' });
+    res.status(201).send({ message: 'Registration successful' });
 });
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    const users = await connect();
-    const user = await users.findOne({ username });
-    if (user && await bcrypt.compare(password, user.password)) {
-        res.status(200).json(user);
-    } else {
-        res.status(400).json({ error: 'Invalid credentials' });
+    const users = await connectUsers();
+    const user = await users.findOne({ username, password });
+
+    if (!user) {
+        return res.status(401).send({ error: 'Invalid credentials' });
     }
+
+    res.send({ message: 'Login successful' });
 });
 
 module.exports = router;
