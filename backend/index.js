@@ -11,6 +11,7 @@ const flash = require('express-flash');
 const authRoutes = require('./routes/auth');
 const missionRoutes = require('./routes/missions');
 const communicationRoutes = require('./routes/communication');
+const dashboardRoutes = require('./routes/dashboard');
 const initializePassport = require('./models/passport-config');
 
 const app = express();
