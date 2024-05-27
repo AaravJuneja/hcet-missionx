@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chatInput');
     const chatMessages = document.querySelector('.chat-messages');
     const sendMessageButton = document.getElementById('sendMessage');
+    const missionsSection = document.getElementById('missions');
+    const noMissionsMessage = document.getElementById('noMissionsMessage');
+    const createMissionBtn = document.getElementById('createMissionBtn');
+    const missionTitleInput = document.getElementById('missionTitle');
+    const missionDetailsInput = document.getElementById('missionDetails');
+    const missionAgentsInput = document.getElementById('missionAgents');
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
@@ -114,3 +120,113 @@ async function endMission(id) {
         alert('Error ending mission');
     }
 }
+
+    let missions = [];
+    let editingIndex = -1;
+
+    const createMission = () => {
+        const title = missionTitleInput.value.trim();
+        const details = missionDetailsInput.value.trim();
+        const agentsString = missionAgentsInput.value.trim();
+        const agents = agentsString.split(',').map(agent => agent.trim());
+
+        if (editingIndex === -1) {
+            const mission = { title, details, agents, active: true, completed: 0 };
+            missions.push(mission);
+        } else {
+            missions[editingIndex].title = title;
+            missions[editingIndex].details = details;
+            missions[editingIndex].agents = agents;
+            editingIndex = -1;
+        }
+
+        renderMissions();
+        $('#newMissionModal').modal('hide');
+        createMissionBtn.innerHTML = 'Create';
+        missionTitleInput.value = '';
+        missionDetailsInput.value = '';
+        missionAgentsInput.value = '';
+    };
+
+    const renderMissions = () => {
+        missionsSection.innerHTML = '';
+        if (missions.length === 0) {
+            noMissionsMessage.style.display = 'block';
+        } else {
+            noMissionsMessage.style.display = 'none';
+            missions.forEach((mission, index) => {
+                const missionElement = document.createElement('div');
+                missionElement.classList.add('mission', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
+                missionElement.innerHTML = `
+                    <h3>${mission.title}</h3>
+                    <p>${mission.details}</p>
+                    <p>Agents: ${mission.agents.join(', ')}</p>
+                    <div class="btn-group" role="group">
+                        <button onclick="endMission(${index})" class="btn btn-danger">End Mission</button>
+                        <button onclick="editMission(${index})" class="btn btn-primary">Edit Mission</button>
+                        <button onclick="addAgent(${index})" class="btn btn-info">Add Agent</button>
+                        <button onclick="removeAgent(${index})" class="btn btn-warning">Remove Agent</button>
+                        <button onclick="imposeEmergency(${index})" class="btn btn-danger">Impose Emergency</button>
+                        <button onclick="notifyAgents(${index})" class="btn btn-success">Notify Agents</button>
+                    </div>
+                    <p>Rank: ${getRank(mission.completed)}</p>
+                `;
+                missionsSection.appendChild(missionElement);
+            });
+        }
+
+    const endMission = (index) => {
+        missions[index].completed += 1;
+        missions[index].active = false;
+        renderMissions();
+    };
+
+    const editMission = (index) => {
+        const mission = missions[index];
+        missionTitleInput.value = mission.title;
+        missionDetailsInput.value = mission.details;
+        missionAgentsInput.value = mission.agents.join(', ');
+        $('#newMissionModal').modal('show');
+        createMissionBtn.innerHTML = 'Save Changes';
+        editingIndex = index;
+    };
+
+    const addAgent = (index) => {
+        const agent = prompt("Enter the name of the agent to add:");
+        if (agent) {
+            missions[index].agents.push(agent.trim());
+            renderMissions();
+        }
+    };
+
+    const removeAgent = (index) => {
+        const agent = prompt("Enter the name of the agent to remove:");
+        if (agent) {
+            missions[index].agents = missions[index].agents.filter(a => a !== agent.trim());
+            renderMissions();
+        }
+    };
+
+    const imposeEmergency = (index) => {
+        alert(`Emergency imposed on mission: ${missions[index].title}`);
+    };
+
+    const notifyAgents = (index) => {
+        alert(`Agents notified for mission: ${missions[index].title}`);
+    };
+
+    const getRank = (completed) => {
+        if (completed >= 50) return 'Radiant';
+        if (completed >= 40) return 'Immortal';
+        if (completed >= 30) return 'Ascendant';
+        if (completed >= 20) return 'Diamond';
+        if (completed >= 15) return 'Platinum';
+        if (completed >= 10) return 'Gold';
+        if (completed >= 5) return 'Silver';
+        if (completed >= 3) return 'Bronze';
+        return 'Iron';
+    };
+
+    createMissionBtn.addEventListener('click', createMission);
+    renderMissions();
+    };

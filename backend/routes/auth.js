@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const connectUsers = require('../models/User');
 
+// Register route using Passport.js
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const users = await connectUsers();
@@ -11,20 +13,18 @@ router.post('/register', async (req, res) => {
         return res.status(400).send({ error: 'Username already exists' });
     }
 
-    await users.insertOne({ username, password, role: 'Agent' });
-    res.status(201).send({ message: 'Registration successful' });
+    const newUser = new User({ username, password, role: 'Agent' });
+
+    await newUser.save();
+
+    res.redirect('/login');
 });
 
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    const users = await connectUsers();
-    const user = await users.findOne({ username, password });
-
-    if (!user) {
-        return res.status(401).send({ error: 'Invalid credentials' });
-    }
-
-    res.send({ message: 'Login successful' });
-});
+// Login route using Passport.js local strategy
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/dashboard', // Redirect to dashboard on successful login
+    failureRedirect: '/login',      // Redirect to login page on failed login
+    failureFlash: true              // Enable flash messages for authentication failures
+}));
 
 module.exports = router;
