@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ username, password })
             });
 
-            console.log(await response.text())
-
             const data = await response.json();
             if (response.ok) {
                 alert('Login successful');
@@ -47,8 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
             });
-
-            console.log(await response.text())
 
             const data = await response.json();
             if (response.ok) {

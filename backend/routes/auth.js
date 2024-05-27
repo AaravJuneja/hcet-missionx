@@ -20,8 +20,8 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/dashboard', // Redirect to dashboard on successful login
-    failureRedirect: '/login',     // Redirect to login page on failed login
+    successRedirect: '/auth/dashboard', // Redirect to dashboard on successful login
+    failureRedirect: '/auth/login',     // Redirect to login page on failed login
     failureFlash: true             // Enable flash messages for authentication failures
 }));
 
