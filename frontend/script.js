@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const missionContainer = document.getElementById('missions');
     const noMissionsMessage = document.getElementById('noMissionsMessage');
     const chatInput = document.getElementById('chatInput');
-    const chatMessages = document.getElementById('chatMessages');
+    const chatMessages = document.querySelector('.chat-messages');
     const sendMessageButton = document.getElementById('sendMessage');
     const createMissionButton = document.getElementById('createMission');
     const missionForm = document.getElementById('missionForm');
@@ -11,6 +11,84 @@ document.addEventListener('DOMContentLoaded', () => {
     const editMissionForm = document.getElementById('editMissionForm');
     const editMissionId = document.getElementById('editMissionId');
     const editMissionDetails = document.getElementById('editMissionDetails');
+    const userRankElement = document.getElementById('userRank');
+    const completedMissionsElement = document.getElementById('completedMissions');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+    
+        // Login form submission
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+    
+                try {
+                    const response = await fetch('http://localhost:3000/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+    
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert(data.message);
+                        window.location.href = 'dashboard.html'; // Redirect to dashboard on successful login
+                    } else {
+                        alert(data.error || 'Login failed');
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    alert('Login failed. Please try again later.');
+                }
+            });
+        }
+    
+        // Registration form submission
+        if (registerForm) {
+            registerForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+    
+                try {
+                    const response = await fetch('http://localhost:3000/auth/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+    
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert(data.message);
+                        window.location.href = 'login.html'; // Redirect to login page on successful registration
+                    } else {
+                        alert(data.error || 'Registration failed');
+                    }
+                } catch (error) {
+                    console.error('Error during registration:', error);
+                    alert('Registration failed. Please try again later.');
+                }
+            });
+        }
+    });    
+
+    // Fetch user info and display rank and completed missions
+    fetch('http://localhost:3000/auth/userinfo')
+        .then(response => response.json())
+        .then(user => {
+            userRankElement.textContent = `Rank: ${user.rank}`;
+            completedMissionsElement.textContent = `Completed Missions: ${user.completedMissions}`;
+        })
+        .catch(error => console.error('Error fetching user info:', error));
 
     // Fetch and display missions
     if (missionContainer) {
@@ -192,22 +270,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(updatedMission => {
-                document.querySelector(`.mission[data-id="${missionId}"] .card-text`).textContent = updatedMission.details;
+                const missionElement = document.querySelector(`.mission[data-id="${missionId}"]`);
+                missionElement.querySelector('.card-text').textContent = updatedMission.details;
                 editMissionModal.hide();
             })
             .catch(error => console.error('Error updating mission:', error));
     });
 
-    // Check if there are no missions
+    // Check if there are no active missions
     function checkNoMissions() {
-        if (missionContainer.querySelectorAll('.mission').length === 0) {
+        if (missionContainer.children.length === 0) {
             noMissionsMessage.style.display = 'block';
         }
-    }
-
-    // Logout function
-    function logout() {
-        console.log('User logged out');
-        window.location.href = 'login.html';
     }
 });

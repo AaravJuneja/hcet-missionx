@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Mission = require('../models/mission.js');
+const { updateUserRank } = require('../models/User.js');
 
 // Create a new mission
 router.post('/', async (req, res) => {
@@ -25,11 +26,28 @@ router.put('/:id', async (req, res) => {
     res.send(mission);
 });
 
-// Complete (deactivate) a mission
+// Complete (deactivate) a mission and update agent ranks
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
-    const mission = await Mission.findByIdAndUpdate(id, { active: false }, { new: true });
-    res.send(mission);
+    const mission = await Mission.findById(id);
+    
+    if (mission) {
+        mission.active = false;
+        await mission.save();
+
+        for (const agent of mission.agents) {
+            const users = await connect();
+            const user = await users.findOne({ username: agent });
+            if (user) {
+                const completedMissions = (user.completedMissions || 0) + 1;
+                await updateUserRank(agent, completedMissions);
+            }
+        }
+
+        res.send(mission);
+    } else {
+        res.status(404).send({ error: 'Mission not found' });
+    }
 });
 
 // Add an agent to a mission

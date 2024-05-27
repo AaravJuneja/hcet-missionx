@@ -26,11 +26,15 @@
         <h1>Dashboard</h1>
     </header>
     <main class="container">
+        <section id="user-info" class="my-4">
+            <h2>Agent Info</h2>
+            <p id="userRank">Rank: Loading...</p>
+            <p id="completedMissions">Completed Missions: Loading...</p>
+        </section>
         <section id="missions" class="my-4">
             <h2>Active Missions</h2>
             <p id="noMissionsMessage">No active missions</p>
         </section>
-        
         <section id="communication" class="my-4">
             <h2>Communication Facility</h2>
             <div class="chat-window">
@@ -96,15 +100,16 @@
                             <label for="editMissionDetails">Mission Details</label>
                             <textarea class="form-control" id="editMissionDetails" rows="3" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
