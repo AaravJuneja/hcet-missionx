@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const bcrypt = require('bcrypt');
 const passport = require('passport');
+const router = express.Router();
 const connectUsers = require('../models/User');
 
-// Register route using Passport.js
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const users = await connectUsers();
@@ -13,18 +13,16 @@ router.post('/register', async (req, res) => {
         return res.status(400).send({ error: 'Username already exists' });
     }
 
-    const newUser = new User({ username, password, role: 'Agent' });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await users.insertOne({ username, password: hashedPassword, role: 'Agent' });
 
-    await newUser.save();
-
-    res.redirect('/login');
+    res.status(201).send({ message: 'Registration successful' });
 });
 
-// Login route using Passport.js local strategy
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/dashboard', // Redirect to dashboard on successful login
-    failureRedirect: '/login',      // Redirect to login page on failed login
-    failureFlash: true              // Enable flash messages for authentication failures
+    failureRedirect: '/login',     // Redirect to login page on failed login
+    failureFlash: true             // Enable flash messages for authentication failures
 }));
 
 module.exports = router;
