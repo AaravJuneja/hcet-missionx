@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ username, password })
             });
 
+            console.log(await response.text())
+
             const data = await response.json();
             if (response.ok) {
                 alert('Registration successful');

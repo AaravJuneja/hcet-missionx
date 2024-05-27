@@ -35,6 +35,7 @@ app.use(passport.session());
 app.use('/auth', authRoutes);
 app.use('/missions', missionRoutes);
 app.use('/communication', communicationRoutes);
+app.use('/dashboard', dashboardRoutes);
 
 app.get('/', (req, res) => {
     res.send('Home Page');
