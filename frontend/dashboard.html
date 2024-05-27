@@ -4,34 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - H.C.E.T Syndicate</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
-        <h1>Dashboard</h1>
+    <header class="bg-dark text-light py-4">
+        <div class="container">
+            <h1 class="text-center">Dashboard</h1>
+        </div>
     </header>
-    <main>
-        <!-- Mission Information Section -->
-        <section id="missions">
-            <h2>Active Missions</h2>
-            <!-- Missions will be dynamically loaded here -->
+    <main class="py-5">
+        <section id="missions" class="container">
+            <h2 class="mb-4">Active Missions</h2>
+            <p id="noMissionsMessage" class="text-muted">No active missions</p>
         </section>
-        
-        <!-- Communication Tools Section -->
-        <section id="communication">
-            <h2>Communication Facility</h2>
-            <div class="chat-window">
-                <div class="chat-messages">
-                    <!-- Chat messages will appear here -->
+        <section id="communication" class="bg-light py-4">
+            <div class="container">
+                <h2 class="mb-4">Communication Facility</h2>
+                <div class="chat-window mb-4">
+                    <div class="chat-messages border p-3 mb-3"> <!-- Adjust styling as needed -->
+                        <!-- Chat messages will appear here -->
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="chatInput" class="form-control" placeholder="Type a message">
+                        <div class="input-group-append">
+                            <button id="sendMessage" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
                 </div>
-                <input type="text" id="chatInput" placeholder="Type a message">
-                <button id="sendMessage">Send</button>
             </div>
         </section>
     </main>
-    <footer>
-        <a href="admin.html">Admin Panel</a>
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <a href="admin.html" class="text-light">Admin Panel</a>
+        </div>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
