@@ -5,33 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - H.C.E.T Syndicate</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">H.C.E.T Syndicate</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin.html">Admin Panel</a>
+                </li>
+            </ul>
+            <button class="btn btn-outline-danger my-2 my-sm-0" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+    <header class="text-center my-4">
         <h1>Dashboard</h1>
     </header>
-    <main>
-        <!-- Mission Information Section -->
-        <section id="missions">
+    <main class="container">
+        <section id="missions" class="my-4">
             <h2>Active Missions</h2>
-            <!-- Missions will be dynamically loaded here -->
+            <p id="noMissionsMessage">No active missions</p>
         </section>
         
-        <!-- Communication Tools Section -->
-        <section id="communication">
+        <section id="communication" class="my-4">
             <h2>Communication Facility</h2>
             <div class="chat-window">
-                <div class="chat-messages">
+                <div class="chat-messages" id="chatMessages">
                     <!-- Chat messages will appear here -->
                 </div>
-                <input type="text" id="chatInput" placeholder="Type a message">
-                <button id="sendMessage">Send</button>
+                <div class="input-group my-3">
+                    <input type="text" id="chatInput" class="form-control" placeholder="Type a message">
+                    <div class="input-group-append">
+                        <button id="sendMessage" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
-    <footer>
-        <a href="admin.html">Admin Panel</a>
-    </footer>
+    <button id="createMission" class="btn btn-primary fixed-bottom m-3">+</button>
+
+    <!-- Modal for mission creation -->
+    <div class="modal fade" id="missionModal" tabindex="-1" aria-labelledby="missionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="missionModalLabel">Create New Mission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="missionForm">
+                        <div class="form-group">
+                            <label for="missionTitle">Mission Title</label>
+                            <input type="text" class="form-control" id="missionTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="missionDetails">Mission Details</label>
+                            <textarea class="form-control" id="missionDetails" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="missionAgents">Assign Agents</label>
+                            <input type="text" class="form-control" id="missionAgents" placeholder="Comma-separated agent names">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Mission</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for editing mission -->
+    <div class="modal fade" id="editMissionModal" tabindex="-1" aria-labelledby="editMissionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMissionModalLabel">Edit Mission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMissionForm">
+                        <input type="hidden" id="editMissionId">
+                        <div class="form-group">
+                            <label for="editMissionDetails">Mission Details</label>
+                            <textarea class="form-control" id="editMissionDetails" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
