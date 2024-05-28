@@ -200,7 +200,7 @@ const renderMissions = () => {
             const missionElement = document.createElement('div');
             missionElement.classList.add('mission', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
             missionElement.innerHTML = `
-                <h3>${mission.title}</h3>
+                                <h3>${mission.title}</h3>
                 <p>${mission.details}</p>
                 <p>Agents: ${mission.agents.join(', ')}</p>
                 <div class="btn-group" role="group">

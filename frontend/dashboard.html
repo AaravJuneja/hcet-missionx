@@ -16,7 +16,7 @@
         <section id="missions" class="container">
             <h2 class="mb-4">Active Missions</h2>
             <p id="noMissionsMessage" class="text-muted">No active missions</p>
-            <button id="newMissionBtn" class="btn btn-primary" data-toggle="modal" data-target="#newMissionModal">Create New Mission</button>
+            <button id="newMissionBtn" class="btn btn-primary" data-toggle="modal" data-target="#newMissionModal">Start New Mission</button>
         </section>
     </main>
     <footer class="bg-dark text-light py-4">
@@ -30,7 +30,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newMissionModalLabel">Create New Mission</h5>
+                    <h5 class="modal-title" id="newMissionModalLabel">Start New Mission</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -53,7 +53,37 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="createMissionBtn">Create</button>
+                    <button type="button" class="btn btn-primary" id="startMissionBtn">Start Mission</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission Details Modal -->
+    <div class="modal fade" id="missionDetailsModal" tabindex="-1" role="dialog" aria-labelledby="missionDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="missionDetailsModalLabel">Mission Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMissionForm">
+                        <div class="form-group">
+                            <label for="editMissionTitle">Title</label>
+                            <input type="text" class="form-control" id="editMissionTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editMissionDetails">Details</label>
+                            <textarea class="form-control" id="editMissionDetails" rows="3" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveMissionChangesBtn">Save Changes</button>
                 </div>
             </div>
         </div>
@@ -62,6 +92,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html>
