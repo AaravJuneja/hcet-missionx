@@ -1,25 +1,32 @@
 // Load environment variables from .env file
 require('dotenv').config();
 
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const passport = require('passport');
-const session = require('express-session');
-const flash = require('express-flash');
-const authRoutes = require('./routes/auth');
-const missionRoutes = require('./routes/missions');
-const communicationRoutes = require('./routes/communication');
-const dashboardRoutes = require('./routes/dashboard');
-const initializePassport = require('./models/passport-config');
+import express from 'express';
+import { connect } from 'mongoose';
+import { json } from 'body-parser';
+import cors from 'cors';
+import passport, { initialize, session as _session } from 'passport';
+import session from 'express-session';
+import flash from 'express-flash';
+import { join } from 'path';
+import { promises as fs } from 'fs';
+
+// Import routes
+import authRoutes from './routes/auth';
+import missionRoutes from './routes/missions';
+import communicationRoutes from './routes/communication';
+import initializePassport from './models/passport-config';
 
 const app = express();
-mongoose.connect('mongodb://localhost:27017/hcet-missionx', { useNewUrlParser: true, useUnifiedTopology: true });
 
+// Database connection
+connect('mongodb://localhost:27017/hcet-missionx', { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Passport configuration
 initializePassport(passport);
 
-app.use(bodyParser.json());
+// Middleware setup
+app.use(json());
 app.use(cors());
 app.use(flash());
 
@@ -29,18 +36,42 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(initialize());
+app.use(_session());
 
+// Routes
 app.use('/auth', authRoutes);
 app.use('/missions', missionRoutes);
 app.use('/communication', communicationRoutes);
-app.use('/dashboard', dashboardRoutes);
 
+// Dashboard route
+app.get('/dashboard', async (req, res) => {
+    try {
+        const filePath = join(__dirname, '../frontend/dashboard.html');
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        res.status(200).send(fileContent);
+    } catch (err) {
+        res.status(500).send({ error: 'Error loading dashboard page' });
+    }
+});
+
+// Root route
 app.get('/', (req, res) => {
     res.send('Home Page');
 });
 
+// Serve frontend files for other routes if needed
+app.get('/frontend/:file', async (req, res) => {
+    try {
+        const filePath = join(__dirname, '../frontend', req.params.file);
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        res.status(200).send(fileContent);
+    } catch (err) {
+        res.status(404).send({ error: 'File not found' });
+    }
+});
+
+// Start the server
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });

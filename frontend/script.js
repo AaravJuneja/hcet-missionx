@@ -13,52 +13,68 @@ document.addEventListener('DOMContentLoaded', () => {
     const missionAgentsInput = document.getElementById('missionAgents');
 
     if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
+        loginForm.addEventListener('submit', (event) => {
             event.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            const response = await fetch('http://localhost:3000/auth/login', {
+            fetch('http://localhost:3000/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Login successful');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    return response.text().then(errorMessage => {
+                        throw new Error(errorMessage);
+                    });
+                }
+            })
+            .catch(error => {
+                alert(error.message);
             });
-
-            const data = await response.json();
-            if (response.ok) {
-                alert('Login successful');
-                window.location.href = 'dashboard.html';
-            } else {
-                alert(data.error);
-            }
         });
     }
 
     if (registerForm) {
-        registerForm.addEventListener('submit', async (event) => {
+        registerForm.addEventListener('submit', (event) => {
             event.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            const response = await fetch('http://localhost:3000/auth/register', {
+            fetch('http://localhost:3000/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Registration successful');
+                    window.location.href = 'login.html';
+                } else {
+                    return response.json().then(data => {
+                        throw new Error(data.error);
+                    });
+                }
+            })
+            .catch(error => {
+                alert(error.message);
             });
-
-            const data = await response.json();
-            if (response.ok) {
-                alert('Registration successful');
-                window.location.href = 'login.html';
-            } else {
-                alert(data.error);
-            }
         });
     }
 
     if (missionContainer) {
         fetch('http://localhost:3000/missions')
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch missions');
+                }
+            })
             .then(missions => {
                 missions.forEach(mission => {
                     const missionElement = document.createElement('div');
@@ -75,158 +91,175 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     missionContainer.appendChild(missionElement);
                 });
+            })
+            .catch(error => {
+                console.error(error);
             });
     }
 
     if (sendMessageButton) {
-        sendMessageButton.addEventListener('click', async () => {
+        sendMessageButton.addEventListener('click', () => {
             const message = chatInput.value;
             const sender = 'Agent'; // Replace with actual sender's name or ID
 
-            const response = await fetch('http://localhost:3000/communication', {
+            fetch('http://localhost:3000/communication', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message, sender })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            })
+            .then(newMessage => {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = `${newMessage.sender}: ${newMessage.message}`;
+                chatMessages.appendChild(messageElement);
+                chatInput.value = '';
+            })
+            .catch(error => {
+                console.error(error);
             });
-
-            const newMessage = await response.json();
-            const messageElement = document.createElement('div');
-            messageElement.textContent = `${newMessage.sender}: ${newMessage.message}`;
-            chatMessages.appendChild(messageElement);
-            chatInput.value = '';
         });
 
         fetch('http://localhost:3000/communication')
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch messages');
+                }
+            })
             .then(messages => {
                 messages.forEach(msg => {
                     const messageElement = document.createElement('div');
                     messageElement.textContent = `${msg.sender}: ${msg.message}`;
                     chatMessages.appendChild(messageElement);
                 });
+            })
+            .catch(error => {
+                console.error(error);
             });
     }
 });
 
-async function endMission(id) {
-    const response = await fetch(`http://localhost:3000/missions/${id}`, {
+function endMission(index) {
+    fetch(`http://localhost:3000/missions/${index}`, {
         method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Mission ended successfully');
+            location.reload();
+        } else {
+            throw new Error('Error ending mission');
+        }
+    })
+    .catch(error => {
+        console.error(error);
     });
-
-    if (response.ok) {
-        alert('Mission ended successfully');
-        location.reload();
-    } else {
-        alert('Error ending mission');
-    }
 }
 
-    let missions = [];
-    let editingIndex = -1;
+let missions = [];
+let editingIndex = -1;
 
-    const createMission = () => {
-        const title = missionTitleInput.value.trim();
-        const details = missionDetailsInput.value.trim();
-        const agentsString = missionAgentsInput.value.trim();
-        const agents = agentsString.split(',').map(agent => agent.trim());
+const createMission = () => {
+    const title = missionTitleInput.value.trim();
+    const details = missionDetailsInput.value.trim();
+    const agentsString = missionAgentsInput.value.trim();
+    const agents = agentsString.split(',').map(agent => agent.trim());
 
-        if (editingIndex === -1) {
-            const mission = { title, details, agents, active: true, completed: 0 };
-            missions.push(mission);
-        } else {
-            missions[editingIndex].title = title;
-            missions[editingIndex].details = details;
-            missions[editingIndex].agents = agents;
-            editingIndex = -1;
-        }
+    if (editingIndex === -1) {
+        const mission = { title, details, agents, active: true, completed: 0 };
+        missions.push(mission);
+    } else {
+        missions[editingIndex].title = title;
+        missions[editingIndex].details = details;
+        missions[editingIndex].agents = agents;
+        editingIndex = -1;
+    }
 
-        renderMissions();
-        $('#newMissionModal').modal('hide');
-        createMissionBtn.innerHTML = 'Create';
-        missionTitleInput.value = '';
-        missionDetailsInput.value = '';
-        missionAgentsInput.value = '';
-    };
-
-    const renderMissions = () => {
-        missionsSection.innerHTML = '';
-        if (missions.length === 0) {
-            noMissionsMessage.style.display = 'block';
-        } else {
-            noMissionsMessage.style.display = 'none';
-            missions.forEach((mission, index) => {
-                const missionElement = document.createElement('div');
-                missionElement.classList.add('mission', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
-                missionElement.innerHTML = `
-                    <h3>${mission.title}</h3>
-                    <p>${mission.details}</p>
-                    <p>Agents: ${mission.agents.join(', ')}</p>
-                    <div class="btn-group" role="group">
-                        <button onclick="endMission(${index})" class="btn btn-danger">End Mission</button>
-                        <button onclick="editMission(${index})" class="btn btn-primary">Edit Mission</button>
-                        <button onclick="addAgent(${index})" class="btn btn-info">Add Agent</button>
-                        <button onclick="removeAgent(${index})" class="btn btn-warning">Remove Agent</button>
-                        <button onclick="imposeEmergency(${index})" class="btn btn-danger">Impose Emergency</button>
-                        <button onclick="notifyAgents(${index})" class="btn btn-success">Notify Agents</button>
-                    </div>
-                    <p>Rank: ${getRank(mission.completed)}</p>
-                `;
-                missionsSection.appendChild(missionElement);
-            });
-        }
-
-    const endMission = (index) => {
-        missions[index].completed += 1;
-        missions[index].active = false;
-        renderMissions();
-    };
-
-    const editMission = (index) => {
-        const mission = missions[index];
-        missionTitleInput.value = mission.title;
-        missionDetailsInput.value = mission.details;
-        missionAgentsInput.value = mission.agents.join(', ');
-        $('#newMissionModal').modal('show');
-        createMissionBtn.innerHTML = 'Save Changes';
-        editingIndex = index;
-    };
-
-    const addAgent = (index) => {
-        const agent = prompt("Enter the name of the agent to add:");
-        if (agent) {
-            missions[index].agents.push(agent.trim());
-            renderMissions();
-        }
-    };
-
-    const removeAgent = (index) => {
-        const agent = prompt("Enter the name of the agent to remove:");
-        if (agent) {
-            missions[index].agents = missions[index].agents.filter(a => a !== agent.trim());
-            renderMissions();
-        }
-    };
-
-    const imposeEmergency = (index) => {
-        alert(`Emergency imposed on mission: ${missions[index].title}`);
-    };
-
-    const notifyAgents = (index) => {
-        alert(`Agents notified for mission: ${missions[index].title}`);
-    };
-
-    const getRank = (completed) => {
-        if (completed >= 50) return 'Radiant';
-        if (completed >= 40) return 'Immortal';
-        if (completed >= 30) return 'Ascendant';
-        if (completed >= 20) return 'Diamond';
-        if (completed >= 15) return 'Platinum';
-        if (completed >= 10) return 'Gold';
-        if (completed >= 5) return 'Silver';
-        if (completed >= 3) return 'Bronze';
-        return 'Iron';
-    };
-
-    createMissionBtn.addEventListener('click', createMission);
     renderMissions();
-    };
+    $('#newMissionModal').modal('hide');
+    createMissionBtn.innerHTML = 'Create';
+    missionTitleInput.value = '';
+    missionDetailsInput.value = '';
+    missionAgentsInput.value = '';
+};
+
+const renderMissions = () => {
+    missionsSection.innerHTML = '';
+    if (missions.length === 0) {
+        noMissionsMessage.style.display = 'block';
+    } else {
+        noMissionsMessage.style.display = 'none';
+        missions.forEach((mission, index) => {
+            const missionElement = document.createElement('div');
+            missionElement.classList.add('mission', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
+            missionElement.innerHTML = `
+                <h3>${mission.title}</h3>
+                <p>${mission.details}</p>
+                <p>Agents: ${mission.agents.join(', ')}</p>
+                <div class="btn-group" role="group">
+                    <button onclick="endMission(${index})" class="btn btn-danger">End Mission</button>
+                    <button onclick="editMission(${index})" class="btn btn-primary">Edit Mission</button>
+                    <button onclick="addAgent(${index})" class="btn btn-info">Add Agent</button>
+                    <button onclick="removeAgent(${index})" class="btn btn-warning">Remove Agent</button>
+                    <button onclick="imposeEmergency(${index})" class="btn btn-danger">Impose Emergency</button>
+                    <button onclick="notifyAgents(${index})" class="btn btn-success">Notify Agents</button>
+                </div>
+                <p>Rank: ${getRank(mission.completed)}</p>
+            `;
+            missionsSection.appendChild(missionElement);
+        });
+    }
+};
+
+const editMission = (index) => {
+    const mission = missions[index];
+    missionTitleInput.value = mission.title;
+    missionDetailsInput.value = mission.details;
+    missionAgentsInput.value = mission.agents.join(', ');
+    $('#newMissionModal').modal('show');
+    createMissionBtn.innerHTML = 'Save Changes';
+    editingIndex = index;
+};
+
+const addAgent = (index) => {
+    const agent = prompt("Enter the name of the agent to add:");
+    if (agent) {
+        missions[index].agents.push(agent.trim());
+        renderMissions();
+    }
+};
+
+const removeAgent = (index) => {
+    const agent = prompt("Enter the name of the agent to remove:");
+    if (agent) {
+        missions[index].agents = missions[index].agents.filter(a => a !== agent.trim());
+        renderMissions();
+    }
+};
+
+const imposeEmergency = (index) => {
+    alert(`Emergency imposed on mission: ${missions[index].title}`);
+};
+
+const notifyAgents = (index) => {
+    alert(`Agents notified for mission: ${missions[index].title}`);
+};
+
+const getRank = (completed) => {
+    if (completed >= 50) return 'Radiant';
+    if (completed >= 40) return 'Immortal';
+    if (completed >= 30) return 'Ascendant';
+    if (completed >= 20) return 'Diamond';
+    if (completed >= 15) return 'Platinum';
+    if (completed >= 10) return 'Gold';
+    if (completed >= 5) return 'Silver';
+    if (completed >= 3) return 'Bronze';
+    return 'Iron';
+};

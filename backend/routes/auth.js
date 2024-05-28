@@ -2,8 +2,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const router = express.Router();
+const path = require('path');
 const connectUsers = require('../models/User');
 
+// Register Route
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const users = await connectUsers();
@@ -19,9 +21,10 @@ router.post('/register', async (req, res) => {
     res.status(201).send({ message: 'Registration successful' });
 });
 
+// Login Route
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/auth/dashboard', // Redirect to dashboard on successful login
-    failureRedirect: '/auth/login',     // Redirect to login page on failed login
+    successRedirect: '/dashboard', // Redirect to dashboard on successful login
+    failureRedirect: '/login',     // Redirect to login page on failed login
     failureFlash: true             // Enable flash messages for authentication failures
 }));
 
