@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-const MissionSchema = new mongoose.Schema({
-    title: String,
-    details: String,
-    agents: [String],
-    active: Boolean
+const missionSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    details: { type: String, required: true },
+    agents: { type: [String], required: true },
+    active: { type: Boolean, default: true },
+    completed: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.model('Mission', MissionSchema);
+module.exports = mongoose.model('Mission', missionSchema);

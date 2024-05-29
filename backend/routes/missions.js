@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Mission = require('../models/mission.js');
 const path = require('path');
 const fs = require('fs').promises;
+const missionController = require('../controllers/missionController');
 
 // POST route for creating a mission
 router.post('/', async (req, res) => {
