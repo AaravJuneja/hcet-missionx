@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Mission</title>
+</head>
+<body>
+    <h1>Start Mission</h1>
+    <form id="weatherForm" action="/weather" method="GET">
+        <label for="city">Enter City:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Check Weather</button>
+    </form>
+
+    <div id="weatherInfo">
+    </div>
+
+    <script src="/services/weatherService.js"></script>
+</body>
+</html>

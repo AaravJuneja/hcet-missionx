@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H.C.E.T Syndicate Portal</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Welcome to H.C.E.T Syndicate Portal</h1>
+    <% if (user) { %>
+        <p>Welcome, <%= user %>!</p>
+        <p>Please select an option to get started:</p>
+        <ul>
+            <li><a href="/views/mission/start.ejs">Start Mission</a></li>
+            <li><a href="/missions">View Missions</a></li>
+            <li><a href="/">Manage Agents</a></li>
+            <li><a href="/views/admin/dashboard.ejs">Admin Portal</a></li>
+        </ul>
+    <% } else { %>
+        <p>Please <a href="/views/user/login.ejs">login</a> or <a href="/views/user/register.ejs">register</a> to continue.</p>
+    <% } %>
+</body>
+</html>
