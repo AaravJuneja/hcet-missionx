@@ -73,10 +73,5 @@ app.get('/frontend/:file', async (req, res) => {
 
 // Start the server
 app.listen(3000, () => {
-    console.log('Server is running on https://backend-jvpf.onrender.com/');
+    console.log('Server is running on https://backend-dp6r.onrender.com');
 });
-
-app.use((req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    next();
-  });
