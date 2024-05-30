@@ -4,47 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4">Agent Dashboard</h1>
+        <h1 class="my-4 text-center">Agent Dashboard</h1>
 
         <div class="mb-4">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#newMissionModal">Create Mission</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newMissionModal">Create Mission</button>
         </div>
 
-        <div id="missions"></div>
-        <div id="noMissionsMessage" style="display: none;">No missions available.</div>
+        <div id="missions" class="mb-4">
+            <!-- Mission list will be generated here -->
+        </div>
+        <div id="noMissionsMessage" class="alert alert-warning d-none">No missions available.</div>
 
-        <!-- New Mission Modal -->
         <div class="modal fade" id="newMissionModal" tabindex="-1" aria-labelledby="newMissionModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="newMissionModalLabel">New Mission</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="missionTitle">Title</label>
-                            <input type="text" class="form-control" id="missionTitle">
-                        </div>
-                        <div class="form-group">
-                            <label for="missionDetails">Details</label>
-                            <textarea class="form-control" id="missionDetails"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="missionAgents">Agents (comma separated)</label>
-                            <input type="text" class="form-control" id="missionAgents">
-                        </div>
+                        <form id="newMissionForm">
+                            <div class="mb-3">
+                                <label for="missionTitle" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="missionTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="missionDetails" class="form-label">Details</label>
+                                <textarea class="form-control" id="missionDetails" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="missionAgents" class="form-label">Agents (comma separated)</label>
+                                <input type="text" class="form-control" id="missionAgents" required>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="createMissionBtn">Create</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" form="newMissionForm">Create</button>
                     </div>
                 </div>
             </div>
@@ -52,19 +53,17 @@
 
         <h2 class="my-4">Communication</h2>
         <div class="chat-container">
-            <div class="chat-messages"></div>
-            <div class="input-group my-3">
-                <input type="text" id="chatInput" class="form-control" placeholder="Type your message here...">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" id="sendMessage">Send</button>
+            <div class="chat-messages border p-3 mb-3"></div>
+            <form id="chatForm">
+                <div class="input-group mb-3">
+                    <input type="text" id="chatInput" class="form-control" placeholder="Type your message here..." required>
+                    <button class="btn btn-primary" type="submit">Send</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-+tgA8dH3+5xHAjMd6gfsNzRvG+Eu7CjFZ" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>

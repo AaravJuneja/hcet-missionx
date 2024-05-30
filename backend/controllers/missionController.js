@@ -1,6 +1,5 @@
 const Mission = require('../models/mission');
 
-// Fetch all missions
 exports.getAllMissions = async (req, res) => {
     try {
         const missions = await Mission.find();
@@ -10,7 +9,6 @@ exports.getAllMissions = async (req, res) => {
     }
 };
 
-// Create a new mission
 exports.createMission = async (req, res) => {
     try {
         const { title, details, agents } = req.body;
@@ -22,7 +20,6 @@ exports.createMission = async (req, res) => {
     }
 };
 
-// Update an existing mission
 exports.updateMission = async (req, res) => {
     try {
         const { id } = req.params;
@@ -34,7 +31,6 @@ exports.updateMission = async (req, res) => {
     }
 };
 
-// Delete a mission
 exports.deleteMission = async (req, res) => {
     try {
         const { id } = req.params;
@@ -45,7 +41,6 @@ exports.deleteMission = async (req, res) => {
     }
 };
 
-// End a mission
 exports.endMission = async (req, res) => {
     try {
         const { id } = req.params;
@@ -62,7 +57,6 @@ exports.endMission = async (req, res) => {
     }
 };
 
-// Add an agent to a mission
 exports.addAgent = async (req, res) => {
     try {
         const { id } = req.params;
@@ -79,7 +73,6 @@ exports.addAgent = async (req, res) => {
     }
 };
 
-// Remove an agent from a mission
 exports.removeAgent = async (req, res) => {
     try {
         const { id } = req.params;
@@ -96,7 +89,6 @@ exports.removeAgent = async (req, res) => {
     }
 };
 
-// Impose an emergency on a mission
 exports.imposeEmergency = async (req, res) => {
     try {
         const { id } = req.params;
@@ -104,14 +96,12 @@ exports.imposeEmergency = async (req, res) => {
         if (!mission) {
             return res.status(404).json({ error: 'Mission not found' });
         }
-        // Logic for imposing an emergency can be added here
         res.json({ message: `Emergency imposed on mission: ${mission.title}` });
     } catch (error) {
         res.status(500).json({ error: 'Failed to impose emergency' });
     }
 };
 
-// Notify agents about a mission
 exports.notifyAgents = async (req, res) => {
     try {
         const { id } = req.params;
@@ -119,7 +109,6 @@ exports.notifyAgents = async (req, res) => {
         if (!mission) {
             return res.status(404).json({ error: 'Mission not found' });
         }
-        // Logic for notifying agents can be added here
         res.json({ message: `Agents notified for mission: ${mission.title}` });
     } catch (error) {
         res.status(500).json({ error: 'Failed to notify agents' });

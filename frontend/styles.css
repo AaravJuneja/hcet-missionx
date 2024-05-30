@@ -1,0 +1,86 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+h1, h2, h3 {
+    color: #ff8080;
+}
+
+.btn {
+    font-weight: 600;
+    background-color: #ff4d4d;
+    border-color: #ff4d4d;
+}
+
+.mission, .agent {
+    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.4);
+    border-radius: 8px;
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+.form-control {
+    border: 1px solid #ff4d4d;
+    border-radius: 6px;
+    padding: 8px;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.modal-content {
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4);
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+.chat-container {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: #ff6666;
+    border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #ff4d4d;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.container, .mission, .agent, .form-control, .modal-content, .chat-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@media (max-width: 768px) {
+    .container { padding: 0 10px; }
+}
+
+@media (max-width: 576px) {
+    .container { padding: 0 5px; }
+}
