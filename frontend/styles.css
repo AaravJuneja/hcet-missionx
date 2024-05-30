@@ -1,7 +1,13 @@
 body {
     font-family: 'Arial', sans-serif !important;
     background-color: #000 !important;
-    color: #fff !important;
+    color: #000000 !important;
+    font-weight: bolder !important;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 .container {
@@ -11,7 +17,7 @@ body {
 }
 
 h1, h2, h3 {
-    color: #ff8080 !important;
+    color: #f15454 !important;
 }
 
 .btn {
@@ -23,7 +29,7 @@ h1, h2, h3 {
 .mission, .agent {
     box-shadow: 0 2px 4px rgba(255, 0, 0, 0.4) !important;
     border-radius: 8px !important;
-    background-color: rgba(255, 0, 0, 0.2) !important;
+    background-color: rgb(255, 180, 180) !important;
 }
 
 .form-control {
