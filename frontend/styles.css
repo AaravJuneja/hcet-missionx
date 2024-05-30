@@ -1,71 +1,71 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #000;
-    color: #fff;
+    font-family: 'Arial', sans-serif !important;
+    background-color: #000 !important;
+    color: #fff !important;
 }
 
 .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 15px;
+    max-width: 960px !important;
+    margin: 0 auto !important;
+    padding: 0 15px !important;
 }
 
 h1, h2, h3 {
-    color: #ff8080;
+    color: #ff8080 !important;
 }
 
 .btn {
-    font-weight: 600;
-    background-color: #ff4d4d;
-    border-color: #ff4d4d;
+    font-weight: 600 !important;
+    background-color: #ff4d4d !important;
+    border-color: #ff4d4d !important;
 }
 
 .mission, .agent {
-    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.4);
-    border-radius: 8px;
-    background-color: rgba(255, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.4) !important;
+    border-radius: 8px !important;
+    background-color: rgba(255, 0, 0, 0.2) !important;
 }
 
 .form-control {
-    border: 1px solid #ff4d4d;
-    border-radius: 6px;
-    padding: 8px;
-    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid #ff4d4d !important;
+    border-radius: 6px !important;
+    padding: 8px !important;
+    background-color: rgba(255, 0, 0, 0.1) !important;
 }
 
 .modal-content {
-    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4);
-    border-radius: 10px;
-    background-color: rgba(255, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4) !important;
+    border-radius: 10px !important;
+    background-color: rgba(255, 0, 0, 0.2) !important;
 }
 
 .chat-container {
-    background-color: rgba(255, 0, 0, 0.1);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.4);
-    overflow: hidden;
+    background-color: rgba(255, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.4) !important;
+    overflow: hidden !important;
 }
 
 .chat-messages {
-    max-height: 300px;
-    overflow-y: auto;
+    max-height: 300px !important;
+    overflow-y: auto !important;
 }
 
 .chat-messages::-webkit-scrollbar {
-    width: 8px;
+    width: 8px !important;
 }
 
 .chat-messages::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #f1f1f1 !important;
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background-color: #ff6666;
-    border-radius: 4px;
+    background-color: #ff6666 !important;
+    border-radius: 4px !important;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #ff4d4d;
+    background: #ff4d4d !important;
 }
 
 @keyframes fadeIn {
@@ -74,13 +74,13 @@ h1, h2, h3 {
 }
 
 .container, .mission, .agent, .form-control, .modal-content, .chat-container {
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 0.5s ease-out !important;
 }
 
 @media (max-width: 768px) {
-    .container { padding: 0 10px; }
+    .container { padding: 0 10px !important; }
 }
 
 @media (max-width: 576px) {
-    .container { padding: 0 5px; }
+    .container { padding: 0 5px !important; }
 }
