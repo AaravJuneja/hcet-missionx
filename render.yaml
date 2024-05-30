@@ -1,0 +1,12 @@
+# Exported from Render on 2024-05-30T17:18:03Z
+services:
+- type: web
+  name: hcet-missionx
+  runtime: static
+  repo: https://github.com/AaravJuneja/hcet-missionx
+  envVars:
+  - key: SECRET_KEY
+    sync: false
+  staticPublishPath: frontend
+  pullRequestPreviewsEnabled: true
+version: "1"
