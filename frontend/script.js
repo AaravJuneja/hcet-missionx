@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            fetch('http://localhost:3000/auth/login', {
+            fetch('http://hcet-missionx.onrender.com/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            fetch('http://localhost:3000/auth/register', {
+            fetch('http://hcet-missionx.onrender.com/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (missionContainer) {
-        fetch('http://localhost:3000/missions')
+        fetch('http://hcet-missionx.onrender.com/missions')
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const message = chatInput.value;
             const sender = 'Agent'; // Replace with actual sender's name or ID
 
-            fetch('http://localhost:3000/communication', {
+            fetch('http://hcet-missionx.onrender.com/communication', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message, sender })
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        fetch('http://localhost:3000/communication')
+        fetch('http://hcet-missionx.onrender.com/communication')
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function endMission(index) {
-    fetch(`http://localhost:3000/missions/${index}`, {
+    fetch(`http://hcet-missionx.onrender.com/missions/${index}`, {
         method: 'DELETE'
     })
     .then(response => {
